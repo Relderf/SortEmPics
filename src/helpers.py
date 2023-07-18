@@ -35,6 +35,6 @@ def copy_test_files():
                 
 def update_folders(values):
     config = load_config()
-    config["input_folder"] = values.get('-INPUT_FOLDER-')
-    config["output_folder"] = values.get('-OUTPUT_FOLDER-')
+    config["input_folder"] = values.get('-INPUT_FOLDER-') + "/"
+    config["output_folder"] = values.get('-OUTPUT_FOLDER-') + "/"
     save_config(config)
