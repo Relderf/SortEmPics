@@ -8,7 +8,9 @@ def preset():
     if not os.path.exists(f"{cts.CONFIG_PATH}"):
         data = {
             "input_folder": "C:/",
-            "output_folder": "C:/sortedPics/"
+            "output_folder": "C:/sortedPics/",
+            "keep_original": True,
+            "single_file_folder": False,
         }
         with open(f"{cts.CONFIG_PATH}", "w", encoding = "utf-8") as config:
             json.dump(config, data, indent = 4, ensure_ascii = False)
@@ -33,8 +35,10 @@ def copy_test_files():
             if file not in items:
                 shutil.copy(f"{cts.BACKUP_PATH}{file}", cts.DEV_IN_PATH)
                 
-def update_folders(values):
+def update_config(values):
     config = load_config()
     config["input_folder"] = values.get('-INPUT_FOLDER-') + "/"
     config["output_folder"] = values.get('-OUTPUT_FOLDER-') + "/"
+    config["keep_original"] = values.get('-KEEP_ORIGINAL-')
+    config["single_file_folder"] = values.get('-SINGLE_FILE_FOLDER-')
     save_config(config)
