@@ -34,11 +34,14 @@ def copy_test_files():
         for file in backup_file:
             if file not in items:
                 shutil.copy(f"{cts.BACKUP_PATH}{file}", cts.DEV_IN_PATH)
-                
+
 def update_config(values):
+    print(values)
     config = load_config()
-    config["input_folder"] = values.get('-INPUT_FOLDER-') + "/"
-    config["output_folder"] = values.get('-OUTPUT_FOLDER-') + "/"
+    in_path = values.get('-INPUT_FOLDER-')
+    out_path = values.get('-OUTPUT_FOLDER-')
+    config["input_folder"] = in_path + "/" if in_path[-1] != "/" else in_path
+    config["output_folder"] = out_path + "/" if out_path[-1] != "/" else out_path
     config["keep_original"] = values.get('-KEEP_ORIGINAL-')
     config["single_file_folder"] = values.get('-SINGLE_FILE_FOLDER-')
     save_config(config)
