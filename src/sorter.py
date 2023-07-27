@@ -1,8 +1,8 @@
 from src.helpers import load_config
+import constants as cts
 import os
 from datetime import datetime
 from PIL import Image, ExifTags
-import json
 
 
 def sort_pictures():
@@ -10,7 +10,12 @@ def sort_pictures():
     in_folder_path = config['input_folder']
     source_items = os.listdir(config['input_folder'])
     for item in source_items:
-        print(get_file_details(in_folder_path + item))
+        path = in_folder_path + "/" + item
+        metadata = get_file_details(path)
+        secure_folder(out_path = config['output_folder'],
+                      year = metadata['year'],
+                      month = cts.MONTHS[metadata['month']]
+                      )
 
 
 def get_file_details(file):
@@ -29,5 +34,12 @@ def get_file_details(file):
             'second': date_obj.second
         }
     return {}
+
+def secure_folder(out_path, year, month):
+    if not os.path.exists(f"{out_path}/{year}"):
+        os.mkdir(f"{out_path}/{year}")
+    if not os.path.exists(f"{out_path}/{year}/{month}"):
+        os.mkdir(f"{out_path}/{year}/{month}")
+    
         
     
