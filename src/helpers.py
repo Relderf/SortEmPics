@@ -45,4 +45,7 @@ def update_config(values):
     config["output_folder"] = out_path + "/" if out_path[-1] != "/" else out_path
     config["keep_original"] = values.get('-KEEP_ORIGINAL-')
     config["single_file_folder"] = values.get('-SINGLE_FILE_FOLDER-')
+    config["month_folder_format"] = ("number_name" if values.get('-NUMBER_AND_NAME-') 
+        else "number_only" if values.get('-NUMBER_ONLY-') 
+        else "name_only")
     save_config(config)

@@ -34,6 +34,9 @@ def load_layout():
             ],
             [sg.Checkbox('Keep original files', key="-KEEP_ORIGINAL-", default=config["keep_original"], font=('Verdana',12), pad=PAD_TOP_M)],
             [sg.Checkbox('Create folder for sole file', key="-SINGLE_FILE_FOLDER-", default=config["single_file_folder"], font=('Verdana',12)),],
+            [sg.Radio("Number and name", "number_name", key="-NUMBER_AND_NAME-", default=config["month_folder_format"]=="number_name", font=('Verdana',12), pad=PAD_TOP_S)],
+            [sg.Radio("Number only", "number_name", key="-NUMBER_ONLY-", default=config["month_folder_format"]=="number_only", font=('Verdana',12))],
+            [sg.Radio("Name only", "number_name", key="-NAME_ONLY-", default=config["month_folder_format"]=="name_only", font=('Verdana',12))],
             [sg.Button('Save', size=(10,1), key='-SAVE-', font=('Verdana',16), pad=PAD_TOP_M)],
             [sg.Button('Back', size=(10,1), key='-BACK-', font=('Verdana',12), pad=PAD_TOP_S)]
     ]
