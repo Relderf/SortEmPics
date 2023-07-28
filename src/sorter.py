@@ -12,10 +12,15 @@ def sort_pictures():
     for item in source_items:
         path = in_folder_path + "/" + item
         metadata = get_file_details(path)
-        secure_folder(out_path = config['output_folder'],
-                      year = metadata['year'],
-                      month = cts.MONTHS[metadata['month']]
+        
+        output_folder = config['output_folder']
+        year_folder = metadata['year']
+        month_folder = cts.MONTHS[metadata['month']]
+        secure_folder(out_path = output_folder,
+                      year = year_folder,
+                      month = month_folder
                       )
+        os.rename(path, f"{output_folder}/{year_folder}/{month_folder}/{metadata['name']}")
 
 
 def get_file_details(file):
@@ -35,11 +40,14 @@ def get_file_details(file):
         }
     return {}
 
+
 def secure_folder(out_path, year, month):
     if not os.path.exists(f"{out_path}/{year}"):
         os.mkdir(f"{out_path}/{year}")
     if not os.path.exists(f"{out_path}/{year}/{month}"):
         os.mkdir(f"{out_path}/{year}/{month}")
-    
-        
+
+
+
+
     
