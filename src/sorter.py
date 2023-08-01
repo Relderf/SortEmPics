@@ -3,6 +3,7 @@ import constants as cts
 import os
 from datetime import datetime
 from PIL import Image, ExifTags
+import shutil
 
 
 def sort_pictures():
@@ -23,11 +24,10 @@ def sort_pictures():
         month_folder = format_month(config, metadata['month'])
         day_folder = metadata['day']
         if not config["single_file_folder"] and quantities[year_folder][metadata['month']][day_folder] < 2:
-            secure_folder(output_folder, year_folder, month_folder)
-            move_file(input_file_path, output_folder, year_folder, month_folder, metadata['name'])
-        else:
-            secure_folder(output_folder, year_folder, month_folder, day_folder)
-            move_file(input_file_path, output_folder, year_folder, month_folder, metadata['name'], day_folder)
+            day_folder = None
+        secure_folder(output_folder, year_folder, month_folder, day_folder)
+        move_opt = not config["keep_original"]
+        move_file(move_opt, input_file_path, output_folder, year_folder, month_folder, day_folder, metadata['name'])
 
 
 def get_file_details(file):
@@ -48,7 +48,7 @@ def get_file_details(file):
     return {}
 
 
-def secure_folder(out_path, year, month, day=None):
+def secure_folder(out_path, year, month, day):
     if not os.path.exists(f"{out_path}/{year}"):
         os.mkdir(f"{out_path}/{year}")
     if not os.path.exists(f"{out_path}/{year}/{month}"):
@@ -57,11 +57,14 @@ def secure_folder(out_path, year, month, day=None):
         os.mkdir(f"{out_path}/{year}/{month}/{day}")
 
 
-def move_file(in_path, out_path, year, month, name, day=None):
-    if day != None:
-        os.rename(in_path, f"{out_path}{year}/{month}/{day}/{name}")
+def move_file(move, in_path, out_base, year, month, day, name):
+    out_path = (f"{out_base}{year}/{month}/{day}/{name}" 
+                if day != None 
+                else f"{out_base}{year}/{month}/{name}")
+    if move:
+        os.rename(in_path, out_path)
     else:
-        os.rename(in_path, f"{out_path}{year}/{month}/{name}")
+        shutil.copy(in_path, out_path)
 
 
 def get_quantities(in_folder_path, source_items):
