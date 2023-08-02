@@ -8,3 +8,15 @@ MONTHS = { 1: "January", 2: "February", 3: "March", 4: "April", 5: "May",
     6: "June", 7: "July", 8: "August", 9: "September", 10: "October",
     11: "November", 12: "December" }
 MONTHS_NUMS = { key: f"{key} - {MONTHS[key]}" for key in MONTHS.keys() }
+
+PAD_Y = (0,(20,20))
+PAD_TOP_S = (0,(20,0))
+PAD_TOP_M = (0,(40,0))
+WINDOW_WIDTH = 500
+WINDOW_HEIGHT = 600
+LAYOUT_WIDTH = WINDOW_WIDTH - 40
+DARKER_BACK = '#2d2d2d'
+WINDOW_WIDTH = 360
+WINDOW_HEIGHT = 400
+LAYOUT_WIDTH = WINDOW_WIDTH - 40
+DARKER_BACK = '#1e212b'
