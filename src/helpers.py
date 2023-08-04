@@ -15,7 +15,7 @@ def preset():
             "configured": False
         }
         with open(f"{cts.CONFIG_PATH}", "w", encoding = "utf-8") as config:
-            json.dump(config, data, indent = 4, ensure_ascii = False)
+            json.dump(data, config, indent = 4, ensure_ascii = False)
 
 def load_config():
     """ Load the config file and return the data """
