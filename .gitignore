@@ -5,3 +5,4 @@ config.json
 favicon.ico
 build
 app.spec
+dist
