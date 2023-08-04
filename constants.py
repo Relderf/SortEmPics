@@ -6,7 +6,7 @@ DEV_IN_PATH = "E:\\Programing\\SortEmPics playground\\in\\"
 DEV_OUT_PATH = "E:\\Programing\\SortEmPics playground\\out\\"
 MONTHS = { 1: "January", 2: "February", 3: "March", 4: "April", 5: "May",
     6: "June", 7: "July", 8: "August", 9: "September", 10: "October",
-    11: "November", 12: "December" }
+    11: "November", 12: "December", "unknown": "Unknown" }
 MONTHS_NUMS = { key: f"{key} - {MONTHS[key]}" for key in MONTHS.keys() }
 
 PAD_Y = (0,(20,20))

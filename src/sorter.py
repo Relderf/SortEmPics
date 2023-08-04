@@ -50,7 +50,12 @@ def get_file_details(file):
             'minute': date_obj.minute,
             'second': date_obj.second
         }
-    return {}
+    return {
+        'year': 'unknown', 
+        'month': 'unknown', 
+        'day': 'unknown', 
+        'name': os.path.basename(file)
+    }
 
 
 def secure_folder(out_path, year, month, day):
