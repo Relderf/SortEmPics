@@ -1,9 +1,9 @@
 {
     "input_folder": "E:/Programing/SortEmPics playground/in/",
     "output_folder": "E:/Programing/SortEmPics playground/out/",
-    "keep_original": false,
+    "keep_original": true,
     "single_file_folder": false,
     "month_folder_format": "number_name",
     "images_videos_separate": true,
-    "configured": false
+    "configured": true
 }

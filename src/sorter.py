@@ -10,8 +10,9 @@ def sort_pictures():
     config = load_config()
     in_folder_path = config['input_folder']
     source_items = os.listdir(config['input_folder'])
+    separated = config["images_videos_separate"]
     if not config["single_file_folder"]:
-        quantities = get_quantities(in_folder_path, source_items)
+        quantities = get_quantities(in_folder_path, source_items, separated)
     else:
         quantities = None
     
@@ -67,20 +68,12 @@ def move_file(move, in_path, out_base, year, month, day, name):
         shutil.copy(in_path, out_path)
 
 
-def get_quantities(in_folder_path, source_items):
+def get_quantities(in_folder_path, source_items, separate):
     quantities = {}
     for item in source_items:
         metadata = get_file_details(in_folder_path + item)
-        if metadata['year'] in quantities:
-            if metadata['month'] in quantities[metadata['year']]:
-                if metadata['day'] in quantities[metadata['year']][metadata['month']]:
-                    quantities[metadata['year']][metadata['month']][metadata['day']] += 1
-                else:
-                    quantities[metadata['year']][metadata['month']][metadata['day']] = 1
-            else:
-                quantities[metadata['year']][metadata['month']] = { metadata['day']: 1 }
-        else:
-            quantities[metadata['year']] = { metadata['month']: {metadata['day']: 1} }
+        quantities.setdefault(metadata['year'], {}).setdefault(metadata['month'], {}).setdefault(metadata['day'], 0)
+        quantities[metadata['year']][metadata['month']][metadata['day']] += 1
     return quantities
 
 
@@ -92,3 +85,4 @@ def format_month(config, month_number):
         return cts.MONTHS[month_number]
     if name_format == "number_name":
         return f"{month_number} - {cts.MONTHS[month_number]}"
+    
