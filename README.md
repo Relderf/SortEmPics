@@ -18,6 +18,8 @@ I didn't think it was worth the effort digging any further)
 specially from professional cameras) to sort.
 · Better HUD.
 · Test it work on Linux or Mac (may not work due to folder separating format)
+· Sorting video files (unfortunately, Image will crash if given
+a video file, so that's to be avoided)
 
 I hope you can make the best use out of this!
 
