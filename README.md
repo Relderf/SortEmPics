@@ -8,6 +8,9 @@ the best they can with it (just give credit! :>)
 
 This app is made explicitly for Windows and not tested on Linux or Mac OS.
 
+Files in the input folder cannot be in nested folders. They must all
+be in the same root folder.
+
 Some missing features I though of that I (or anyone) could implement
 in a future:
 
@@ -20,6 +23,7 @@ specially from professional cameras) to sort.
 · Test it work on Linux or Mac (may not work due to folder separating format)
 · Sorting video files (unfortunately, Image will crash if given
 a video file, so that's to be avoided)
+· Dive into nested folders in the Input folder
 
 I hope you can make the best use out of this!
 
