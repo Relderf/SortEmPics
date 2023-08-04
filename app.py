@@ -4,7 +4,7 @@ from src.helpers import copy_test_files, preset
 
 def main():
     preset()
-    copy_test_files()
+    #copy_test_files()
     mw.main()
     
 if __name__ == '__main__':
