@@ -33,6 +33,7 @@ def load_layout():
                      element_justification='c').finalize()
 
 def folder_naming_layout(config):
+    """ Returns the layout for the folder naming options """
     return (
         [sg.Text('Select the naming format for month folders.', 
                     font=('',12, 'italic'), justification='left', 
@@ -47,6 +48,7 @@ def folder_naming_layout(config):
     )
 
 def checkboxes_layout(config):
+    """ Returns the layout for the checkboxes """
     return(
         [sg.Checkbox('Keep original files', key="-KEEP_ORIGINAL-", 
                         default=config["keep_original"], font=('Verdana',12))],
@@ -59,6 +61,7 @@ def checkboxes_layout(config):
     )
     
 def browsers_layout(input_folder, output_folder):
+    """ Returns the layout for the input and output folder browsers """
     return (
         [sg.Text('Select the source folder where your pics are.', font=('',12, 'italic'), justification='left', 
                 size=(36, 1), text_color=cts.TEAL_200, pad=cts.PAD_TOP_XS)],

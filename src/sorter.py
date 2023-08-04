@@ -7,12 +7,14 @@ import shutil
 
 
 def sort_pictures():
+    """ Sorts the pictures in the input folder 
+    into the output folder, according to
+    the user configuration """
     config = load_config()
     in_folder_path = config['input_folder']
     source_items = os.listdir(config['input_folder'])
-    separated = config["images_videos_separate"]
     if not config["single_file_folder"]:
-        quantities = get_quantities(in_folder_path, source_items, separated)
+        quantities = get_quantities(in_folder_path, source_items)
     else:
         quantities = None
     
@@ -32,6 +34,8 @@ def sort_pictures():
 
 
 def get_file_details(file):
+    """ Returns a dictionary with the 
+    file metadata details """
     image_exif = Image.open(file)._getexif()
     if image_exif:
         exif = { ExifTags.TAGS[k]: v for k, v in image_exif.items() if k in ExifTags.TAGS and type(v) is not bytes }
@@ -50,6 +54,7 @@ def get_file_details(file):
 
 
 def secure_folder(out_path, year, month, day):
+    """ Makes sure the output folder exists """
     if not os.path.exists(f"{out_path}/{year}"):
         os.mkdir(f"{out_path}/{year}")
     if not os.path.exists(f"{out_path}/{year}/{month}"):
@@ -59,6 +64,7 @@ def secure_folder(out_path, year, month, day):
 
 
 def move_file(move, in_path, out_base, year, month, day, name):
+    """ Move or copy a given file to the output folder """
     out_path = (f"{out_base}{year}/{month}/{day}/{name}" 
                 if day != None 
                 else f"{out_base}{year}/{month}/{name}")
@@ -68,7 +74,9 @@ def move_file(move, in_path, out_base, year, month, day, name):
         shutil.copy(in_path, out_path)
 
 
-def get_quantities(in_folder_path, source_items, separate):
+def get_quantities(in_folder_path, source_items):
+    """ Returns a dictionary with the quantities of files
+    to determine if the day folder should be created"""
     quantities = {}
     for item in source_items:
         metadata = get_file_details(in_folder_path + item)
@@ -78,6 +86,8 @@ def get_quantities(in_folder_path, source_items, separate):
 
 
 def format_month(config, month_number):
+    """ Returns the proper month folder name
+    according to the user configuration """
     name_format = config["month_folder_format"]
     if name_format == "number":
         return month_number

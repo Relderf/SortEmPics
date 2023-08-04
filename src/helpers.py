@@ -40,6 +40,8 @@ def copy_test_files():
                 shutil.copy(f"{cts.BACKUP_PATH}{file}", cts.DEV_IN_PATH)
 
 def update_config(values):
+    """ Receives the values set by the user in the 
+    config window and updates the config file """
     config = load_config()
     in_path = values.get('-INPUT_FOLDER-')
     out_path = values.get('-OUTPUT_FOLDER-')
