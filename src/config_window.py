@@ -55,14 +55,7 @@ def checkboxes_layout(config):
                     font=('',12, 'italic'), justification='left', size=(36, 3), 
                     text_color=cts.TEAL_200)],
         [sg.Checkbox('Create sole file folders', key="-SINGLE_FILE_FOLDER-", 
-                        default=config["single_file_folder"], font=('Verdana',12))],
-        [sg.Text("Checking the option below will create two separate root folders completly "
-                    + "separate one from another, one for images and one for videos. Otherwise, "
-                    + "they are put together in the same day folders", 
-                    font=('',12, 'italic'), justification='left', size=(36, 5), 
-                    text_color=cts.TEAL_200)],
-        [sg.Checkbox('Images and Videos separated', key="-IMAGES_VIDEOS_SEPARATE-", 
-                        default=config["images_videos_separate"], font=('Verdana',12))],
+                        default=config["single_file_folder"], font=('Verdana',12))]
     )
     
 def browsers_layout(input_folder, output_folder):
