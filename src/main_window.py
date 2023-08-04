@@ -3,6 +3,7 @@ from tkinter.font import BOLD
 import src.config_window as config_window
 from src.sorter import sort_pictures
 import constants as cts
+import src.helpers as helpers
 
 sg.theme('DarkTanBlue')
 
@@ -20,7 +21,8 @@ def load_layout():
             [sg.Button('Exit', size=(14,1), key='-EXIT-', 
                        font=('Verdana',12), pad=cts.PAD_Y)]
         ], element_justification='center', background_color=cts.DARK_BACK_1,
-                   )]
+        )],
+        [sg.Text('Powered by Relderf - Etherground 2023', font=('', 9), justification='c')]
     ]
     return sg.Window('SortEmPics', 
                      layout, margins=(20,20),
@@ -40,6 +42,9 @@ def main():
             config_window.main()
             break
         if event == '-SORT-':
+            if not helpers.load_config()['configured']:
+                sg.popup('You need to configure the app first!', title='Error')
+                continue
             sort_pictures()
     
     
