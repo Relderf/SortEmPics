@@ -3,5 +3,6 @@
     "output_folder": "E:/Programing/SortEmPics playground/out/",
     "keep_original": false,
     "single_file_folder": false,
-    "month_folder_format": "number_name"
+    "month_folder_format": "number_name",
+    "configured": false
 }

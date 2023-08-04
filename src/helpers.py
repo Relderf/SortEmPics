@@ -11,7 +11,8 @@ def preset():
             "output_folder": "C:/sortedPics/",
             "keep_original": True,
             "single_file_folder": False,
-            "month_folder_format": "number_name"
+            "month_folder_format": "number_name",
+            "configured": False
         }
         with open(f"{cts.CONFIG_PATH}", "w", encoding = "utf-8") as config:
             json.dump(config, data, indent = 4, ensure_ascii = False)
@@ -24,6 +25,8 @@ def load_config():
 
 def save_config(config):
     """ Save the config file with the new data """
+    if not config["configured"]:
+        config["configured"] = True
     with open(f"{cts.CONFIG_PATH}", "w", encoding = "utf-8") as config_file:
         json.dump(config, config_file, indent = 4, ensure_ascii = False)
         
@@ -37,7 +40,6 @@ def copy_test_files():
                 shutil.copy(f"{cts.BACKUP_PATH}{file}", cts.DEV_IN_PATH)
 
 def update_config(values):
-    print(values)
     config = load_config()
     in_path = values.get('-INPUT_FOLDER-')
     out_path = values.get('-OUTPUT_FOLDER-')
