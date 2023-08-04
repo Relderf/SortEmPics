@@ -4,5 +4,6 @@
     "keep_original": false,
     "single_file_folder": false,
     "month_folder_format": "number_name",
+    "images_videos_separate": true,
     "configured": false
 }

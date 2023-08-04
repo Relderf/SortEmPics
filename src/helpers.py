@@ -12,7 +12,8 @@ def preset():
             "keep_original": True,
             "single_file_folder": False,
             "month_folder_format": "number_name",
-            "configured": False
+            "configured": False,
+            "images_videos_separate": True
         }
         with open(f"{cts.CONFIG_PATH}", "w", encoding = "utf-8") as config:
             json.dump(config, data, indent = 4, ensure_ascii = False)
