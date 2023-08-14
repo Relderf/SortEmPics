@@ -1,5 +1,11 @@
 # SortEmPics
 
+v1.1.0:
+· Nested folders diving added.
+· Duplicated files taken care of, depending on the configuration policy.
+
+---
+v1.0.0:
 This application was designed and developed under external requirements, 
 and tuned up with what I thought was best for it.
 I have to admit there are some things that could be done better,
