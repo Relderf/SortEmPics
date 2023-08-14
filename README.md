@@ -11,7 +11,7 @@ This app is made explicitly for Windows and not tested on Linux or Mac OS.
 Files in the input folder cannot be in nested folders. They must all
 be in the same root folder.
 
-Some missing features I though of that I (or anyone) could implement
+Some missing features I thought of that I (or anyone) could implement
 in a future:
 
 · Image and Video separated root folders (I've tried using Image to determine
