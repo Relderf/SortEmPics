@@ -20,6 +20,11 @@ def sort_pictures():
         "other": []
     }
     scan_files(in_folder_path, source_items)
+    sorted_amounts = {
+        "images": len(source_items["images"]),
+        "videos": len(source_items["videos"]),
+        "other": len(source_items["other"])
+    }
     
     if not config["single_file_folder"]:
         quantities = get_quantities(source_items["images"])
@@ -38,6 +43,8 @@ def sort_pictures():
         move_opt = not config["keep_original"]
         organize_file(move_opt, image_name, base_folder, year_folder, month_folder, day_folder, metadata['name'])
     videos_and_others(config, source_items)
+    
+    return sorted_amounts
 
 
 def get_file_details(file):
@@ -144,7 +151,10 @@ def scan_files(folder, files):
         if os.path.isdir(item_path):
             scan_files(item_path, files)
         else:
-            fileType = filetype.guess(item_path).mime.split("/")[0]
+            
+            fileType = filetype.guess(item_path)
+            if fileType != None:
+                fileType = fileType.mime.split("/")[0]
             if fileType == "image":
                 files["images"].append(item_path)
             elif fileType == "video":

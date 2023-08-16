@@ -29,6 +29,15 @@ def load_layout():
                      element_justification='c').finalize()
 
 
+def success_popup(sorted_amounts):
+    sg.popup('Sorting completed! Found:'
+        + '\nImages: ' + str(sorted_amounts["images"])
+        + '\nVideos: ' + str(sorted_amounts["videos"])
+        + '\nOther: ' + str(sorted_amounts["other"]),
+        title='Items sorted', custom_text='Done'
+    )
+
+
 def main():
     """ Events loop method """
     window = load_layout()
@@ -45,7 +54,9 @@ def main():
             if not helpers.load_config()['configured']:
                 sg.popup('You need to configure the app first!', title='Error')
                 continue
-            sort_pictures()
+            sorted_amounts = sort_pictures()
+            success_popup(sorted_amounts)
+            
     
     
 if __name__ == '__main__':
