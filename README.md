@@ -1,5 +1,9 @@
 # SortEmPics
 
+v.1.2.1:
+· Popup added, showing the numbers of each file type sorted.
+
+---
 v1.2.0:
 · Videos and other type of files are processed and organized, by in a simple way. If any existed, they are put in a "videos" or "others" folder, in the output folder, without being sorted by date.
 · As with images, if file names conflicted, they are renamed.
