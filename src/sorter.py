@@ -5,36 +5,39 @@ from datetime import datetime
 from PIL import Image, ExifTags
 import shutil
 from filecmp import cmp
+import filetype
 
 
 def sort_pictures():
-    """ Sorts the pictures in the input folder 
-    into the output folder, according to
-    the user configuration """
+    """ Sorts the pictures in the input folder into the output folder, 
+    according to the user configuration. If a video or other type of file 
+    is found, they are put in separate folders for each of them """
     config = load_config()
     in_folder_path = config['input_folder']
-    source_items = []
+    source_items = {
+        "images": [],
+        "videos": [],
+        "other": []
+    }
     scan_files(in_folder_path, source_items)
     
     if not config["single_file_folder"]:
-        quantities = get_quantities(source_items)
+        quantities = get_quantities(source_items["images"])
     else:
         quantities = None
     
-    for item in source_items:
-        print(item)
-        metadata = get_file_details(item)
-        print(metadata)
-        
-        output_folder = config['output_folder']
+    for image_name in source_items['images']:
+        metadata = get_file_details(image_name)
+        base_folder = config['output_folder']
         year_folder = metadata['year']
         month_folder = format_month(config, metadata['month'])
         day_folder = metadata['day']
         if not config["single_file_folder"] and quantities[year_folder][metadata['month']][day_folder]["quantity"] < 2:
             day_folder = None
-        secure_folder(output_folder, year_folder, month_folder, day_folder)
+        secure_folder(base_folder, year_folder, month_folder, day_folder)
         move_opt = not config["keep_original"]
-        organize_file(move_opt, item, output_folder, year_folder, month_folder, day_folder, metadata['name'])
+        organize_file(move_opt, image_name, base_folder, year_folder, month_folder, day_folder, metadata['name'])
+    videos_and_others(config, source_items)
 
 
 def get_file_details(file):
@@ -77,6 +80,11 @@ def organize_file(move, in_path, out_base, year, month, day, name):
     out_path = (f"{out_base}{year}/{month}/{day}/{name}" 
                 if day != None 
                 else f"{out_base}{year}/{month}/{name}")
+    deal_with_file(move, in_path, out_path)
+
+
+def deal_with_file(move, in_path, out_path):
+    """ Move or copy a given file to the output folder """
     if not os.path.exists(out_path):
         move_file(move, in_path, out_path)
     elif not cmp(in_path, out_path):
@@ -91,7 +99,7 @@ def move_file(move, in_path, out_path):
         os.rename(in_path, out_path)
     else:
         shutil.copy(in_path, out_path)
-
+        
 
 def rename_file(out_path):
     """ Returns a new name for the file if it already exists """
@@ -103,11 +111,11 @@ def rename_file(out_path):
     return out_path
 
 
-def get_quantities(source_items):
+def get_quantities(images):
     """ Returns a dictionary with the quantities of files
     to determine if the day folder should be created"""
     quantities = {}
-    for item in source_items:
+    for item in images:
         data = get_file_details(item)
         quantities.setdefault(data['year'], {}).setdefault(data['month'], {}).setdefault(data['day'], {}).setdefault('quantity', 0)
         quantities[data['year']][data['month']][data['day']]['quantity'] += 1
@@ -136,5 +144,28 @@ def scan_files(folder, files):
         if os.path.isdir(item_path):
             scan_files(item_path, files)
         else:
-            files.append(item_path)
+            fileType = filetype.guess(item_path).mime.split("/")[0]
+            if fileType == "image":
+                files["images"].append(item_path)
+            elif fileType == "video":
+                files["videos"].append(item_path)
+            else:
+                files["other"].append(item_path)
 
+
+def videos_and_others(config, source_items):
+    """ Moves the videos and other files to their respective folders """
+    move = not config["keep_original"]
+    base_folder = config["output_folder"]
+    for file_type in ["videos", "other"]:
+        if source_items[file_type]:
+            if not os.path.exists(base_folder + file_type):
+                os.mkdir(base_folder + file_type)
+            for file_origin_path in source_items[file_type]:
+                destination_path = os.path.join(base_folder, file_type, os.path.basename(file_origin_path))
+                if os.path.exists(destination_path):
+                    destination_path = rename_file(destination_path)
+                move_file(move, file_origin_path, destination_path)
+        
+
+    
