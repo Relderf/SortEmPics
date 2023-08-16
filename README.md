@@ -1,5 +1,10 @@
 # SortEmPics
 
+v1.2.0:
+· Videos and other type of files are processed and organized, by in a simple way. If any existed, they are put in a "videos" or "others" folder, in the output folder, without being sorted by date.
+· As with images, if file names conflicted, they are renamed.
+
+---
 v1.1.0:
 · Nested folders diving added.
 · Duplicated files taken care of, depending on the configuration policy.
